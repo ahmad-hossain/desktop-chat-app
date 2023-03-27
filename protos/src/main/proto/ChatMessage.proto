@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package com.ahmad_hossain.desktopchatapp.common;
+
+enum MessageType {
+  UNSPECIFIED = 0;
+  CHAT = 1;
+  JOIN = 2;
+  LEAVE = 3;
+}
+
+message ChatMessage {
+  optional MessageType type = 1;
+  required int32 senderId = 2;
+  required string senderName = 3;
+  optional string message = 4;
+}

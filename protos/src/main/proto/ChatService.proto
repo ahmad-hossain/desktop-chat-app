@@ -1,0 +1,9 @@
+import "google/protobuf/empty.proto";
+import "ChatMessage.proto";
+
+package com.ahmad_hossain.desktopchatapp.common;
+
+service ChatService {
+    rpc StartChat(ChatMessage) returns (stream ChatMessage) {}
+    rpc SendMessage(ChatMessage) returns (google.protobuf.Empty) {}
+}
