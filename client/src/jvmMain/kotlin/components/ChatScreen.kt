@@ -1,9 +1,6 @@
 package components
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
@@ -16,8 +13,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ahmad_hossain.desktopchatapp.common.ChatMessageOuterClass
 import com.ahmad_hossain.desktopchatapp.common.ChatMessageOuterClass.ChatMessage
+import com.ahmad_hossain.desktopchatapp.common.ChatMessageOuterClass.MessageType
 import io.grpc.ManagedChannelBuilder
 import kotlinx.coroutines.launch
 import util.ChatClient
@@ -41,13 +38,15 @@ fun ChatScreen(userName: String) {
     }
 
     Box(Modifier.fillMaxSize()) {
-        LazyColumn {
+        LazyColumn(
+            contentPadding = PaddingValues(16.dp),
+        ) {
             items(chatMessages) { msg ->
                 when (msg.type) {
-                    ChatMessageOuterClass.MessageType.UNSPECIFIED -> TODO()
-                    ChatMessageOuterClass.MessageType.CHAT -> TODO()
-                    ChatMessageOuterClass.MessageType.JOIN -> TODO()
-                    ChatMessageOuterClass.MessageType.LEAVE -> TODO()
+                    MessageType.UNSPECIFIED -> TODO()
+                    MessageType.CHAT -> ChatMsg(msg = msg, isSender = msg.senderName == userName)
+                    MessageType.JOIN -> TODO()
+                    MessageType.LEAVE -> TODO()
                 }
             }
         }
