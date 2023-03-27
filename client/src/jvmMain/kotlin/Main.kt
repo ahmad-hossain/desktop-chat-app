@@ -1,21 +1,25 @@
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import components.ChatScreen
+import components.HomeScreen
+
+enum class Screen {
+    HOME, CHAT
+}
 
 @Composable
 @Preview
 fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
+    var currentScreen by remember { mutableStateOf(Screen.HOME) }
+    var userName = remember { "" }
 
     MaterialTheme {
-        Button(onClick = {
-            text = "Hello, Desktop!"
-        }) {
-            Text(text)
+        when (currentScreen) {
+            Screen.HOME -> HomeScreen { userName = it; currentScreen = Screen.CHAT }
+            Screen.CHAT -> ChatScreen(userName)
         }
     }
 }

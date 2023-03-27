@@ -25,6 +25,7 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(project(":generate_protos"))
+                implementation("io.grpc:grpc-netty-shaded:1.54.0")
             }
         }
         val jvmTest by getting
