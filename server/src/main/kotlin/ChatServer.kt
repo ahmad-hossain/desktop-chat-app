@@ -39,6 +39,7 @@ class ChatServer(private val port: Int) {
 
         override fun startChat(request: ChatMessage): Flow<ChatMessage> {
             println("${request.senderName} joined the chat")
+
             return flow {
                 chatMessage.collect {
                     emit(it)

@@ -5,6 +5,10 @@ import com.ahmad_hossain.desktopchatapp.common.ChatMessageOuterClass.MessageType
 import com.ahmad_hossain.desktopchatapp.common.ChatServiceGrpcKt.ChatServiceCoroutineStub
 import com.ahmad_hossain.desktopchatapp.common.chatMessage
 import io.grpc.ManagedChannel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.Closeable
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
@@ -16,13 +20,18 @@ class ChatClient (
     private val stub: ChatServiceCoroutineStub = ChatServiceCoroutineStub(channel)
     private val userId = Random.nextInt()
 
-    suspend fun startChat(onMessage: (ChatMessage) -> Unit) {
+    suspend fun startChat(onMessage: (ChatMessage) -> Unit) = coroutineScope {
         val req = chatMessage {
             senderId = userId
             senderName = userName
             type = MessageType.JOIN
         }
-        stub.startChat(req).collect(onMessage)
+        launch {
+            stub.startChat(req).collect(onMessage)
+        }
+        launch {
+            stub.sendMessage(req)
+        }
     }
 
     suspend fun sendMessage(msg: String) {
@@ -36,6 +45,15 @@ class ChatClient (
     }
 
     override fun close() {
+        CoroutineScope(Dispatchers.IO).launch {
+            stub.sendMessage(
+                chatMessage {
+                    senderId = userId
+                    senderName = userName
+                    type = MessageType.LEAVE
+                }
+            )
+        }
         channel.shutdown().awaitTermination(5, TimeUnit.SECONDS)
     }
 }

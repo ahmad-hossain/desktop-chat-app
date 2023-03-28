@@ -45,8 +45,7 @@ fun ChatScreen(userName: String) {
                 when (msg.type) {
                     MessageType.UNSPECIFIED -> TODO()
                     MessageType.CHAT -> ChatMsg(msg = msg, isSender = msg.senderName == userName)
-                    MessageType.JOIN -> TODO()
-                    MessageType.LEAVE -> TODO()
+                    MessageType.JOIN, MessageType.LEAVE  -> JoinLeaveMsg(msg)
                 }
                 Spacer(Modifier.height(16.dp))
             }
