@@ -5,10 +5,7 @@ import com.ahmad_hossain.desktopchatapp.common.ChatMessageOuterClass.MessageType
 import com.ahmad_hossain.desktopchatapp.common.ChatServiceGrpcKt.ChatServiceCoroutineStub
 import com.ahmad_hossain.desktopchatapp.common.chatMessage
 import io.grpc.ManagedChannel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.Closeable
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random
@@ -29,9 +26,8 @@ class ChatClient (
         launch {
             stub.startChat(req).collect(onMessage)
         }
-        launch {
-            stub.sendMessage(req)
-        }
+        delay(100)
+        stub.sendMessage(req)
     }
 
     suspend fun sendMessage(msg: String) {
