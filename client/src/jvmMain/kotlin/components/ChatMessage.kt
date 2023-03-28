@@ -9,6 +9,7 @@ import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ahmad_hossain.desktopchatapp.common.ChatMessageOuterClass.ChatMessage
 
@@ -24,19 +25,22 @@ fun ChatMsg(msg: ChatMessage, isSender: Boolean) {
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = horizAlignment
     ) {
-        Column(horizontalAlignment = Alignment.Start) {
-            Text(modifier = Modifier.padding(start = BubbleTextPadding), text = msg.senderName)
-            Row {
-                Box(
-                    modifier = Modifier
-                        .background(bubbleColor, RoundedCornerShape(8.dp))
-                        .padding(BubbleTextPadding)
-                ) {
-                    Text(
-                        text = msg.message,
-                        color = contentColorFor(bubbleColor)
-                    )
-                }
+        Box(
+            modifier = Modifier
+                .background(bubbleColor, RoundedCornerShape(8.dp))
+                .padding(BubbleTextPadding)
+        ) {
+            Column {
+                Text(
+                    text = msg.senderName,
+                    fontSize = MaterialTheme.typography.caption.fontSize,
+                    fontWeight = FontWeight.Light,
+                    color = contentColorFor(bubbleColor).copy(alpha = 0.6f)
+                )
+                Text(
+                    text = msg.message,
+                    color = contentColorFor(bubbleColor)
+                )
             }
         }
     }

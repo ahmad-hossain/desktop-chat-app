@@ -48,6 +48,7 @@ fun ChatScreen(userName: String) {
                     MessageType.JOIN -> TODO()
                     MessageType.LEAVE -> TODO()
                 }
+                Spacer(Modifier.height(16.dp))
             }
         }
         var message by remember { mutableStateOf("") }
