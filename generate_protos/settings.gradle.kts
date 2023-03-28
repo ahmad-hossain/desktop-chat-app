@@ -13,5 +13,5 @@ pluginManagement{
 
 include(":protos")
 
-rootProject.name = "multiplatform-generate-protos"
+rootProject.name = "generate_protos"
 
